@@ -8,7 +8,8 @@ import categoryRoutes from './routes/categoryRoutes.js'
 import productRoutes from './routes/productRoutes.js'
 import cors from 'cors';
 
-import path from 'path'
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // config env
 dotenv.config();
@@ -32,7 +33,10 @@ app.use('/api/v1/category' , categoryRoutes);
 app.use('/api/v1/product', productRoutes);
 
 // Static Files
-app.use(express.static(path.join(__dirname , './client/build')))
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, './client/build')));
 
 app.get('*' , function(req, res){
     res.sendFile(path.join(__dirname , './client/build/index.html'));
